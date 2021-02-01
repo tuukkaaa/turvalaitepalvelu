@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | Suomen Turvalaitepalvelu{{% endblock %}
+
+{% block extrastyle %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/admin-extra.css' %}">
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Suomen Turvalaitepalvelu</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

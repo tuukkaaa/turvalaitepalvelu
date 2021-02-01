@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif !important;
+    overflow-x: hidden;
+    background-color: rgb(241, 241, 241) !important;
+
+
+}
+
+#total-orders {
+    background-color: #59A8CD;
+}
+
+#orders-delivered {
+    background-color: #59CD85;
+}
+
+#orders-pending {
+    background-color: #DE6464;
+}
+
+
+.testi {
+    margin: 15px;
+}
+
+.lomake {
+    max-width: 60%;
+}
+
+.tilaushaku > select  {
+    margin: 15px;
+}
+.tilaushaku > input {
+    margin: 15px;
+}

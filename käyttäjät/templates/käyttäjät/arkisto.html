@@ -1,0 +1,54 @@
+{% extends 'käyttäjät/main.html' %}
+
+
+{% block content %}
+
+
+<br>
+<div class="row justify-content-center">
+   
+
+
+    <div class="col-md-8">
+        <h5>Laskutetut työtilaukset </h5>
+        <hr>
+        <div class="card card-body">
+           
+            <table class="table table-sm">
+            <tr>
+            
+            <th>Tilattu </th>
+            <th>Asiakas</th>
+            <th>Työn tila</th>
+            <th>Työ</th>
+            <th>Kohde</th>
+            <th>Katso</th>
+
+            </tr>
+
+            {% for tilaus in laskutetut_tilaukset %}
+                <tr>
+                    <td>{{ tilaus.tilauspäivä|date:"d/m/Y" }}</td>
+                    <td>{{ tilaus.asiakas }}</td>
+                    <td>{{ tilaus.tila }}</td>
+                    <td>{{ tilaus.työ }}</td>
+                    <td>{{ tilaus.työkohde }}</td>
+                    <td><a class="btn btn-sm btn-success" href="{% url 'asiakasYksi' tilaus.id %}">Katso</a></td>
+                    
+
+                </tr>
+            
+            {% endfor %}
+                  
+            
+            </table>
+        </div>
+
+    </div>    
+
+    
+</div>
+
+{% endblock content %}
+
+

@@ -1,0 +1,83 @@
+{% extends 'käyttäjät/main.html' %}
+
+
+{% block content %}
+
+	<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Asiakas:</h5>
+			<hr>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="">Muokkaa asiakasta</a>
+			<a class="btn btn-outline-danger  btn-sm btn-block" href="">Poista asiakas</a>
+
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Yhteystiedot</h5>
+			<hr>
+			<p>Yrityksen nimi: {{ asiakas.yritys }}</p>
+			<p>Tilaaja: {{ asiakas.tilaaja }}</p>
+			<p>Puhelin: {{ asiakas.puhelin }}</p>
+			<p>Sähköposti: {{ asiakas.sähköposti }}</p>
+			
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Kaikki tilaukset</h5>
+			<hr>
+			<h1 style="text-align: center;padding: 10px">{{ tilaukset_yht}}</h1>
+		</div>
+	</div>
+</div>
+
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+			<form method="get">
+
+				{{ asiakasFilter.form }}
+		    <button class="btn btn-primary" type="submit">Etsi</button>
+		  </form>
+		</div>
+	</div>
+	
+</div>
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					
+					<th>Tilauspäivä</th>
+					<th>Tila</th>
+					<th>Muokkaa</th>
+					<th>Poista</th>
+				</tr>
+				{% for tilaus in tilaukset %}
+					<tr>
+						<td>{{ tilaus.tilauspäivä }}</td>
+						<td>{{ tilaus.tila }}</td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'päivitä_tilaus' tilaus.id %}">Muokka</a></td>
+                    <td><a class="btn btn-sm btn-danger" href="{% url 'poista_tilaus' tilaus.id %}">Poista</a></td>
+					</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+

@@ -1,0 +1,33 @@
+{%  extends 'käyttäjät/main.html' %}
+{% block content %}
+{%  include 'käyttäjät/status.html' %}
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>Tilauspäivä</th>
+					<th>Tila</th>
+					<th>Työn kohde</th>
+					<th>Työ</th>
+					<th>Järjestelmä</th>
+				</tr>
+
+				{% for tilaus in tilaukset %}
+
+				<tr>
+					<td>{{tilaus.tilauspäivä}}</td>
+					<td>{{tilaus.tila}}</td>
+					<td>{{tilaus.työkohde}}</td>
+					<td>{{tilaus.työ}}</td>
+					<td>{{tilaus.järjestelmä}}</td>
+				</tr>
+				{% endfor %}
+
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

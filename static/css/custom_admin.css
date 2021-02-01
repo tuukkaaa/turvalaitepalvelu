@@ -1,0 +1,12 @@
+.vTextField {
+    max-width: 11em !important;
+}
+
+
+input[type=number] {
+    max-width: 7em !important;
+}
+
+.select2 {
+    max-width: 15em !important;
+}

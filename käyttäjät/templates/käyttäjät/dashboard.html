@@ -1,0 +1,140 @@
+{% extends 'käyttäjät/main.html' %}
+
+
+{% block content %}
+
+
+
+<br>
+<div class="row justify-content-center">
+   
+
+
+    <div class="col-md-8">
+        <h5>Työmääräin lista </h5>
+        <hr>
+
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+			<form class="tilaushaku" method="get">
+
+				{{ tilausFilter.form }}
+		    <button class="btn btn-primary" type="submit">Hae</button>
+		  </form>
+		</div>
+	</div>
+	
+</div>
+<br>
+
+        <div class="card card-body">
+            <a href="{% url 'admin:käyttäjät_tilaus_add' %}?_to_field=id&_popup=1" class="btn btn-primary btn-lm btn-block" target="_blank">Lisää työmääräin</a>
+            <table class="table table-sm">
+            <tr>
+
+            <th>Työ #</th>
+            <th>Jono</th>
+            <th>Tilattu </th>
+            <th>Asiakas</th>
+            <th>Työn tila</th>
+            <th>Työ</th>
+            <th>Kohde</th>
+            <th>Lisää</th>
+            <th>Katso</th>
+            </tr>
+            <br><br>
+            <h5>Jonossa olevat työt</h5>
+            <br>
+             {% for jono_tilaus in jono_tilaukset %}
+                <tr>
+                    <td>{{ jono_tilaus.id }}</td>
+                    <td>{{ jono_tilaus.tilauspäivä|timesince:tp }}</td>
+                    <td>{{ jono_tilaus.tilauspäivä|date:"d/m/Y" }}</td>
+                    <td>{{ jono_tilaus.asiakas }}</td>
+                    <td>{{ jono_tilaus.tila }}</td>
+                    <td>{{ jono_tilaus.työ }}</td>
+                    <td>{{ jono_tilaus.työkohde }}</td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'admin:käyttäjät_tilaus_change' jono_tilaus.id  %}?_to_field=id&_popup=1" target="_blank">Muokka</a></td>
+                    <td><a class="btn btn-sm btn-danger" href="{% url 'poista_tilaus' jono_tilaus.id %}">Poista</a></td>
+                    
+                </tr>
+            
+            {% endfor %}
+            
+            </table>
+
+   <table class="table table-sm">
+           
+            <br><br>
+            <h5>Työn Alla olevat työt</h5>
+            <br>
+            {% for alla_tilaus in alla_tilaukset %}
+                <tr>
+                    <td>{{ alla_tilaus.id }}</td>
+    
+                    <td>- - - - - - - - - -</td>
+                    <td>{{ alla_tilaus.tilauspäivä|date:"d/m/Y" }}</td>
+                    <td>{{ alla_tilaus.asiakas }}</td>
+                    <td>{{ alla_tilaus.tila }}</td>
+                    <td>{{ alla_tilaus.työ }}</td>
+                    <td>{{ alla_tilaus.työkohde }}</td>
+                  
+             
+                    
+                  
+                    <td><a class="btn btn-sm btn-primary" href="{% url 'admin:käyttäjät_työt_add' %}?tilausnumero={{ alla_tilaus.id }}&_popup=1" target="_blank">Lisää työ</a></td>
+                   
+                    <td><a class="btn btn-sm btn-success" href="{% url 'asiakasYksi' alla_tilaus.id %}">Katso</a></td>
+                    
+                    
+            
+                 
+
+                 
+                </tr>
+            
+            {% endfor %}
+                  
+                  
+            
+            </table>
+
+<table class="table table-sm">
+          
+            <br><br>
+            <h5>Valmiit työt</h5>
+            <br>
+            {% for tilaus in tilaukset %}
+                <tr>
+                    <td>{{ tilaus.id }}</td>
+                    <td>- - - - - - - - - -</td>
+                    <td>{{ tilaus.tilauspäivä|date:"d/m/Y" }}</td>
+                    <td>{{ tilaus.asiakas }}</td>
+                    <td>{{ tilaus.tila }}</td>
+                    <td>{{ tilaus.työ }}</td>
+                    <td>{{ tilaus.työkohde }}</td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'admin:käyttäjät_tilaus_change' tilaus.id  %}?_to_field=id&_popup=1" target="_blank">Muokka</a></td>
+                    <td><a class="btn btn-sm btn-primary" href="{% url 'admin:käyttäjät_työt_add' %}?tilausnumero={{ tilaus.id }}&_popup=1" target="_blank">Lisää työ</a></td>
+                    <td><a class="btn btn-sm btn-success" href="{% url 'asiakasYksi' tilaus.id %}">Katso</a></td>
+
+                </tr>
+            
+            {% endfor %}
+                  
+                  
+            
+            </table>
+
+        </div>
+
+    </div>    
+
+    
+</div>
+
+{% endblock content %}
+
+

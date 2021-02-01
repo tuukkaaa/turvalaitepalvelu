@@ -1,0 +1,50 @@
+{% extends 'käyttäjät/main.html' %}
+
+{% block content %}
+
+<br>
+<div class="row justify-content-center">
+
+    <div class="col-md-8">
+        <h5>Työn kohteet</h5>
+        <hr>
+        <div class="card card-body">
+            <a href="" class="btn btn-primary btn-lm btn-block">Lisää työn kohde</a>
+            <table class="table table-sm">
+            <tr>
+            
+            <th>Kohde</th>
+            <th>Katuosoite</th>
+            <th>Postitoimipaikka</th>
+            <th>Yhteyshenkilö</th>
+            <th>Nimike</th>
+            <th>Puhelin</th>
+            <th>Muokkaa</th>
+            <th>Poista</th>
+            </tr>
+
+            {% for kohde in työkohteet %}
+                <tr>
+                    
+                    <td>{{ kohde.kohde }}</td>
+                    <td>{{ kohde.osoite }}</td>
+                    <td>{{ kohde.postitoimipaikka }}</td>
+                    <td>{{ kohde.yhteyshenkilö }}</td>
+                    <td>{{ kohde.nimike }}</td>
+                    <td>{{ kohde.puhelin }}</td>
+                    
+                    <td><a class="btn btn-sm btn-info" href="">Muokka</a></td>
+                    <td><a class="btn btn-sm btn-danger" href="">Poista</a></td>
+                    
+                </tr>
+            
+            {% endfor %}
+                  
+            </table>
+        </div>
+
+    </div>    
+    
+</div>
+
+{% endblock content %}

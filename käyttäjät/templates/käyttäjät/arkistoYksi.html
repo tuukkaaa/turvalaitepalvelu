@@ -1,0 +1,255 @@
+{% extends 'käyttäjät/main.html' %}
+
+
+{% block content %}
+  <style>
+    .invoice-box {
+        max-width: 1000px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #eee;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+        font-size: 16px;
+        line-height: 24px;
+        color: #555;
+        background-color: white;
+    }
+    
+    .invoice-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+    }
+    
+    .invoice-box table td {
+        padding: 5px;
+        vertical-align: top;
+    }
+    
+    .invoice-box table tr td:nth-child(2) {
+        text-align: right;
+    }
+    
+    .invoice-box table tr.top table td {
+        padding-bottom: 20px;
+        
+    }
+    
+    .invoice-box table tr.top table td.title {
+        font-size: 45px;
+        line-height: 45px;
+        color: #333;
+    }
+    
+    .invoice-box table tr.information table td {
+        padding-bottom: 20px;
+        
+    }
+    
+    .invoice-box table tr.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+    }
+    
+    .invoice-box table tr.details td {
+        padding-bottom: 30px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .invoice-box table tr.item td{
+        border-bottom: 1px solid #eee;
+    }
+    
+    .invoice-box table tr.item.last td {
+        border-bottom: none;
+    }
+    
+    .invoice-box table tr.total td:nth-child(2) {
+        border-top: 2px solid #eee;
+        font-weight: bold;
+    }
+    
+    @media only screen and (max-width: 600px) {
+        .invoice-box table tr.top table td {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+        
+        .invoice-box table tr.information table td {
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+    }
+
+    </style>
+  <div class="invoice-box">
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="8">
+                    <table>
+                        <tr>
+                            <td class="title">
+                                
+                            </td>
+                            
+                            <td>
+                                Tilausnumero: {{ tilaukset.id }}<br>
+                                Päivämäärä: {{ tilaukset.tilauspäivä|date:"d/m/Y" }}<br>
+                                
+                            
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            <tr class="information">
+                <td colspan="8">
+                    <table>
+                        <tr>
+                            <td>
+                                <strong>Asiakas</strong> <br>
+                                {{ tilaukset.asiakas.yritys }}<br>
+                                {{ tilaukset.asiakas.tilaaja }}<br>
+                                {{ tilaukset.asiakas.puhelin }}<br>
+                                {{ tilaukset.asiakas.sähköposti }}<br>
+                            </td>
+                            
+                            <td>
+                                {% if tilaukset.laskutettu == 'Ei' %}
+                                <a class="btn btn-sm btn-custom" href="{% url 'admin:käyttäjät_tilaus_change' tilaukset.id  %}?_to_field=id&_popup=1" target="_blank">Muokka tietoja</a><br>
+                                {% endif %}
+                                <strong>Kohde</strong> <br>
+                                
+                                {{ tilaukset.työkohde.kohde }}<br>
+			                    {{ tilaukset.työkohde.osoite }}<br>
+			                    {{ tilaukset.työkohde.postinumero }}<br>
+		                    	{{ tilaukset.työkohde.postitoimipaikka }}<br>
+		                        {{ tilaukset.työkohde.yhteyshenkilö }}<br>
+		                    	{{ tilaukset.työkohde.nimike }}<br>
+		                    	{{ tilaukset.työkohde.puhelin }}<br>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                  
+                            </td>
+                            
+                            <td>
+                                <strong>Laskutustiedot</strong> <br>
+                                {{ tilaukset.laskutustiedot.yritys }}<br>
+                                {{ tilaukset.laskutustiedot.osoite }}<br>
+                                {{ tilaukset.laskutustiedot.postinumero }}<br>
+                                {{ tilaukset.laskutustiedot.postitoimipaikka }}<br>
+                                {{ tilaukset.laskutustiedot.yhteyshenkilö }}<br>
+                                {{ tilaukset.laskutustiedot.nimike }}<br>
+                                {{ tilaukset.laskutustiedot.puhelin }}<br>
+                            </td>
+                            
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+  
+
+            {% if tilaukset.laskutettu == 'Ei' %}
+
+         
+
+                 <td><a class="btn btn-sm btn-primary" href="{% url 'admin:käyttäjät_työt_add' %}?tilausnumero={{ tilaukset.id }}&_popup=1" target="_blank">Lisää uusi</a></td>
+
+
+             
+            {% endif %}
+           
+           
+           
+            <tr class="heading">
+                <td>Työn kuvaus</td>
+                <td>Päiväys</td>
+                <td></td>
+                <td>Työnimi</td>
+                <td>Työtuntia</td>
+                <td>Työhinta</td>
+                <td>Yht.</td>
+
+                
+
+                 {% if tilaukset.laskutettu == 'Ei' %}
+                    
+                    <td>Lisännyt</td>
+                    <td>Muokkaa</td>
+                  {% endif %}
+               
+            </tr>
+                {% for työ in työt %}
+                    <tr class="details">
+                    <td>{{ työ.kuvaus|default_if_none:"" }}</td>
+                    <td>{{ työ.päiväys|date:"d/m/Y"|default_if_none:"" }}</td>
+                    <td></td>
+                    <td>{{ työ.työnimi }}</td>
+                    <td>{{ työ.työtuntia }}</td>
+                    <td>{{ työ.työhinta }}</td>
+                    
+                      {% load extras %}
+                    <td>{{ työ.työtuntia| multiply:työ.työhinta }}</td>
+                   
+                    {% if tilaukset.laskutettu == 'Ei' %}
+                    <td>{{ työ.lisännyt }}</td>
+                    <td><a class="btn btn-sm btn-custom" href="{% url 'admin:käyttäjät_työt_change' työ.id %}?_to_field=id&_popup=1" target="_blank">Muokkaa</a></td>
+                    {% endif %}
+                  </tr>
+                 {% endfor %}
+                  
+
+
+       
+            
+
+            <tr class="heading">
+                <td> Tuote  </td>
+                <td> Tunnus </td>
+                <td></td>
+                <td></td>
+                <td> Kpl    </td>
+                <td> Hinta  </td>    
+                <td> Yht    </td>
+                {% if tilaukset.laskutettu == 'Ei' %}
+                <td> Muokkaa    </td>
+                {% endif %}
+            </tr>
+            
+
+             {% for tuoteyks in tuoteyksi %}
+            <tr class="item">
+               <td>{{ tuoteyks.tuotenimike|default_if_none:"" }}</td>
+                <td>{{ tuoteyks.tuotetunnus|default_if_none:"" }}</td>
+                <td></td>
+                <td></td>
+                <td>{{ tuoteyks.tuotemäärä }}</td>
+                <td>{{ tuoteyks.tuotehinta }}</td>
+                
+                  {% load extras %}
+                    <td>{{ tuoteyks.tuotemäärä| multiply:tuoteyks.tuotehinta }}</td>
+                   
+                    {% if tilaukset.laskutettu == 'Ei' %}
+                    <td><a class="btn btn-sm btn-custom" href="{% url 'admin:käyttäjät_työt_change' tuoteyks.työnumero.id %}?_to_field=id&_popup=1" target="_blank">Muokkaa</a></td>
+                    
+                    {% endif %}
+                      
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+ 
+
+	
+
+{% endblock %}
+
+

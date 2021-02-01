@@ -1,0 +1,59 @@
+{% extends 'käyttäjät/main.html' %}
+
+
+{% block content %}
+
+
+<br>
+<div class="row justify-content-center">
+   
+
+
+    <div class="col-md-8">
+        <h5>Laskutustiedot</h5>
+        <hr>
+        <div class="card card-body">
+            <a href="" class="btn btn-primary btn-lm btn-block">Lisää laskutustieto</a>
+            <table class="table table-sm">
+            <tr>
+            
+            <th>Yritys </th>
+            <th>Osoite</th>
+            <th>Postinumero</th>
+            <th>Postitoimipaikka</th>
+            <th>Yhteyshenkilö</th>
+            <th>Nimike</th>
+            <th>Puhelin</th>
+            <th>Muokkaa</th>
+            <th>Poista</th>
+            </tr>
+            
+            
+            {% for laskutustieto in laskutustiedot %}
+                <tr>
+                    <td>{{ laskutustieto.yritys }}</td>
+                    <td>{{ laskutustieto.osoite }}</td>
+                    <td>{{ laskutustieto.postinumero }}</td>
+                    <td>{{ laskutustieto.postitoimipaikka }}</td>
+                    <td>{{ laskutustieto.yhteyshenkilö }}</td>
+                    <td>{{ laskutustieto.nimike }}</td>
+                    <td>{{ laskutustieto.puhelin }}</td>
+                   
+                   
+                    <td><a class="btn btn-sm btn-info" href="">Muokka</a></td>
+                    <td><a class="btn btn-sm btn-danger" href="">Poista</a></td>
+ 
+                   
+                </tr>
+            {% endfor %}
+                  
+            
+            </table>
+        </div>
+
+    </div>    
+
+    
+</div>
+
+{% endblock content %}

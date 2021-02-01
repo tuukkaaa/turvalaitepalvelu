@@ -1,0 +1,38 @@
+{% extends 'käyttäjät/main.html' %}
+{% load static %}
+{% block content %}
+{% load widget_tweaks %}
+
+
+
+
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card card-body">
+			
+				<h3>Työmääräin</h3>	<p>{{ tilaus.id }}</p>
+	
+		</div>
+	</div>
+</div>
+
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card card-body">
+			<form action="" method="POST" class="lomake">
+            	{% csrf_token %}
+                  {% for field in lomake %}
+                    {{field.label}}
+                    {{field|add_class:'form-control'}}
+                  
+                  {% endfor %}
+
+
+				<hr>
+				<input type="submit" class="btn btn-info">
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

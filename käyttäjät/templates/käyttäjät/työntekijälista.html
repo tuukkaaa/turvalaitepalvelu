@@ -1,0 +1,51 @@
+{% extends 'käyttäjät/main.html' %}
+
+
+{% block content %}
+
+
+<br>
+<div class="row justify-content-center">
+   
+
+
+    <div class="col-md-8">
+        <h5>Työntekijät</h5>
+        <hr>
+        <div class="card card-body">
+            <a href="{% url 'admin:auth_user_add' %}?_to_field=id&_popup=1" class="btn btn-primary btn-lm btn-block">Lisää työntekijä</a>
+            <table class="table table-sm">
+            <tr>
+            
+            <th>Käyttäjätunnus </th>
+            <th>Etunimi</th>
+            <th>Sukunimi</th>
+            <th>Sähköposti</th>
+            <th>Muokkaa</th>
+            <th>Poista</th>
+            </tr>
+            
+            
+            {% for user in users %}
+                <tr>
+                    <td>{{ user }}</td>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td><a class="btn btn-sm btn-info" href="{% url 'admin:auth_user_change' user.id  %}?_to_field=id&_popup=1">Muokka</a></td>
+                    <td><a class="btn btn-sm btn-danger" href="{% url 'admin:auth_user_delete' user.id  %}?_to_field=id&_popup=1">Poista</a></td>
+ 
+                   
+                </tr>
+            {% endfor %}
+                  
+            
+            </table>
+        </div>
+
+    </div>    
+
+    
+</div>
+
+{% endblock content %}
